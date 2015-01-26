@@ -17,7 +17,7 @@ class DefaultController extends Controller
         $form = $this->createFileForm();
 
         if ($this->getRequest()->getMethod() === "POST") {
-            $form->submit($this->getRequest()->request->all());
+            $form->submit($this->getRequest());
             var_dump($form->get('my_file')->getData());
         }
 
@@ -30,7 +30,6 @@ class DefaultController extends Controller
     public function orginalWorkingAction()
     {
         $form = $this->createFileForm();
-
         if ($this->getRequest()->getMethod() === "POST") {
             $form->submit($this->getRequest()->request->get($form->getName()));
             var_dump($form->get('my_file')->getData());
@@ -45,7 +44,7 @@ class DefaultController extends Controller
     public function expectedBehaviourAction()
     {
         $form = $this->createFileForm();
-
+        print_r($_FILES);
         if ($this->getRequest()->getMethod() === "POST") {
             $form->submit(
                 array_merge(
@@ -82,7 +81,7 @@ class DefaultController extends Controller
                 'required' => true,
                 'constraints' => [
                     new File([
-                        'maxSize' => '5M',
+                        'maxSize' => '2M',
                         'mimeTypes' => [
                             'application/pdf',
                             'application/x-pdf',
@@ -91,6 +90,7 @@ class DefaultController extends Controller
                     ])
                 ]
             ])
+            ->add('field2','text',['required'=>true])
             ->add('submit', 'submit')
             ->getForm();
     }
